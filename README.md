@@ -1,25 +1,15 @@
-**TASK**
+**App**
 
-- Create a node app that implements a set of REST APIs allowing CRUD functionality for an employee resource.
-- Add a front end component of your choosing. The front end component should:
-  - Show a list of the existing employees
-  - Include a way to create a new employee using the POST API
+- A node app that implements a set of REST APIs allowing CRUD functionality for an employee resource.
+- A front end component using React. The front end component:
+  - Shows a list of the existing employees
+  - Includes a way to create a new employee using the POST API
 
-**Expected Time**
+**Limitations**
 
-This exercise is expected to take about 4-5 hours total, over the course of 2-3 days.
+Persistent storage is not used.
 
-**Submission Instructions**
-
-Post your solution to a public repository on [Github](https://github.com/). Send the repository URL back to the same person who sent you these instructions.
-
-**Additional Guidance**
-
-Persistent storage is not necessary, just use an in memory object to track employee records.
-
-Use any npm modules you find useful.
-
-**Expected Endpoints**
+**Endpoints**
 
 POST http://localhost:3000/api/employees
 
@@ -33,14 +23,12 @@ POST http://localhost:3000/api/employees
         - MANAGER
         - LACKEY
 
-    - In addition to the fields included in the POST body, include two fields in each new record that are populated by different external APIs.  For example, a favorite joke and a favorite quote, or a favorite joke and a second favorite joke.  As long as the two external APIs are different.
-        - Possible API endpoints:
+    - In addition to the fields included in the POST body, two fields in each new record are populated by different external APIs.  For example, a favorite joke and a favorite quote.
+        - using API endpoints:
 
             https://ron-swanson-quotes.herokuapp.com/v2/quotes
 
             https://icanhazdadjoke.com
-
-            https://quotes.rest/qod
 
 PUT http://localhost:3000/api/employees/:id
 
