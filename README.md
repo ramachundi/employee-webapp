@@ -54,3 +54,11 @@ DELETE http://localhost:3000/api/employees/:id
 - delete the record corresponding to the id parameter
 
 
+**References**
+
+- https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
+- https://reactstrap.github.io/
+- http://expressjs.com/en/guide/routing.html
+- https://www.npmjs.com/package/tsc-watch
+- https://www.npmjs.com/package/node-fetch
+- https://medium.com/@victorleungtw/how-to-use-webpack-with-react-and-bootstrap-b94d33765970
