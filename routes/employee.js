@@ -79,7 +79,10 @@ router.post('', function (req, res) {
                     if (!employee.hireDate) {
                         return [2 /*return*/, res.status(400).send("hireDate is required")];
                     }
-                    if (!hireDateRegx.test(employee.hireDate.toString())) {
+                    if (!employee.role) {
+                        return [2 /*return*/, res.status(400).send("role is required")];
+                    }
+                    if (!hireDateRegx.test(employee.hireDate)) {
                         return [2 /*return*/, res.status(400).send("hireDate should be in the format of YYYY-MM-DD")];
                     }
                     validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];

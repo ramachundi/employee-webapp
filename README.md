@@ -5,9 +5,16 @@
   - Shows a list of the existing employees
   - Includes a way to create a new employee using the POST API
 
+**Running the app**
+- `npm run watch`
+
 **Limitations**
 
 Persistent storage is not used.
+Client side validation isn't done.
+
+**TODO**
+Hire data should be validated so that it's in the past.
 
 **Endpoints**
 
