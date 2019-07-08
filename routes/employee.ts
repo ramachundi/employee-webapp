@@ -45,6 +45,12 @@ router.post('', async function (req, res) {
     return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
   }
 
+  const currentDate = new Date();
+  const givenDate = new Date(employee.hireDate);
+  if (givenDate.getTime() > currentDate.getTime()) {
+    return res.status(400).send("hireDate should be in the past");
+  }
+
   const validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
   const isValidRole = (validRoles.indexOf(employee.role.toUpperCase()) > -1);
 

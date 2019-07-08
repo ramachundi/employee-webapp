@@ -65,7 +65,7 @@ router.get('/:id', function (req, res) {
 /* POST employee data. */
 router.post('', function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var employee, validRoles, isValidRole, result, _a, _b;
+        var employee, currentDate, givenDate, validRoles, isValidRole, result, _a, _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -84,6 +84,11 @@ router.post('', function (req, res) {
                     }
                     if (!hireDateRegx.test(employee.hireDate)) {
                         return [2 /*return*/, res.status(400).send("hireDate should be in the format of YYYY-MM-DD")];
+                    }
+                    currentDate = new Date();
+                    givenDate = new Date(employee.hireDate);
+                    if (givenDate.getTime() > currentDate.getTime()) {
+                        return [2 /*return*/, res.status(400).send("hireDate should be in the past")];
                     }
                     validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
                     isValidRole = (validRoles.indexOf(employee.role.toUpperCase()) > -1);

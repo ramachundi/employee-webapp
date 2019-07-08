@@ -13,10 +13,6 @@
 Persistent storage is not used.
 Client side validation isn't done.
 
-**TODO**
-
-Hire data should be validated so that it's in the past.
-
 **Endpoints**
 
 POST http://localhost:3000/api/employees
