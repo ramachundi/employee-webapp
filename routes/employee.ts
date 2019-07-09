@@ -79,7 +79,7 @@ router.put('/:id', function (req, res) {
     if (!hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
       return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
     }
-    if (isHireDateInPast(employee.hireDate)) {
+    if (isHireDateInPast(employeeFromRequest.hireDate)) {
       return res.status(400).send("hireDate should be in the past");
     }
   }
