@@ -1,12 +1,12 @@
 'use strict';
 
-import { Request, Response, Router, response } from "express";
+import { Request, Response, Router } from "express";
 import { getRandomId, getFavoriteJoke, getFavouriteQuote } from "../utils/common";
 import { IEmployee } from "../typings/employee";
 const router = Router();
 
 const hireDateRegx = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
-
+const validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
 
 const DATABASE: { [id: string]: IEmployee; } = {};
 
@@ -51,7 +51,6 @@ router.post('', async function (req, res) {
     return res.status(400).send("hireDate should be in the past");
   }
 
-  const validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
   const isValidRole = (validRoles.indexOf(employee.role.toUpperCase()) > -1);
 
   if (!isValidRole) {
@@ -81,6 +80,11 @@ router.put('/:id', function (req, res) {
   if (employeeFromRequest.hireDate && !hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
     return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
   }
+
+  if (employeeFromRequest.role && !(validRoles.indexOf(employeeFromRequest.role.toUpperCase()) > -1)) {
+    return res.status(400).send("'role' should be one of - " + validRoles.join(","));
+  }
+
   employee.hireDate = employeeFromRequest.hireDate || employee.hireDate;
   employee.role = employeeFromRequest.role || employee.role;
   employee.favouriteJoke = employeeFromRequest.favouriteJoke || employee.favouriteJoke;
