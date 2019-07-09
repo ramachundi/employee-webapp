@@ -8,23 +8,30 @@ export function getRandomId() {
 export async function getFavoriteJoke(): Promise<string> {
     //icanhazdadjoke.com
     const response = await fetch("https://icanhazdadjoke.com", {
-       headers: {
-           "Accept": "application/json"
-       }
+        headers: {
+            "Accept": "application/json"
+        }
     });
     const result = await response.json();
     // result will be like -  {"id":"7Ufi31gydFd","joke":"What did the mountain climber name his son? Cliff.","status":200}
     return result.joke;
 }
 
-export async function getFavouriteQuote():Promise<string>
-{
-    const response=await fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes");
+export async function getFavouriteQuote(): Promise<string> {
+    const response = await fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes");
 
-    const result=await response.json();
+    const result = await response.json();
     //result will be like - ["Are you going to tell a man that he can't fart in his own car?"]
 
     return result[0];
+}
 
-    
+export function isHireDateInPast(date: string) {
+    const currentDate = new Date();
+    const givenDate = new Date(date);
+    if (givenDate.getTime() > currentDate.getTime()) {
+        return true;
+    }
+
+    return false;
 }

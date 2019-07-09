@@ -49,6 +49,7 @@ var express_1 = require("express");
 var common_1 = require("../utils/common");
 var router = express_1.Router();
 var hireDateRegx = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
+var validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
 var DATABASE = {};
 /* GET employees listing. */
 router.get('', function (req, res) {
@@ -65,7 +66,7 @@ router.get('/:id', function (req, res) {
 /* POST employee data. */
 router.post('', function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var employee, currentDate, givenDate, validRoles, isValidRole, result, _a, _b;
+        var employee, isValidRole, result, _a, _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -85,12 +86,9 @@ router.post('', function (req, res) {
                     if (!hireDateRegx.test(employee.hireDate)) {
                         return [2 /*return*/, res.status(400).send("hireDate should be in the format of YYYY-MM-DD")];
                     }
-                    currentDate = new Date();
-                    givenDate = new Date(employee.hireDate);
-                    if (givenDate.getTime() > currentDate.getTime()) {
+                    if (common_1.isHireDateInPast(employee.hireDate)) {
                         return [2 /*return*/, res.status(400).send("hireDate should be in the past")];
                     }
-                    validRoles = ["CEO", "VP", "MANAGER", "LACKEY"];
                     isValidRole = (validRoles.indexOf(employee.role.toUpperCase()) > -1);
                     if (!isValidRole) {
                         return [2 /*return*/, res.status(400).send("'role' should exist and should be one of - " + validRoles.join(","))];
@@ -120,8 +118,16 @@ router.put('/:id', function (req, res) {
     var employeeFromRequest = req.body;
     employee.firstName = employeeFromRequest.firstName || employee.firstName;
     employee.lastName = employeeFromRequest.lastName || employee.lastName;
-    if (employeeFromRequest.hireDate && !hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
-        return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
+    if (employeeFromRequest.hireDate) {
+        if (!hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
+            return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
+        }
+        if (common_1.isHireDateInPast(employee.hireDate)) {
+            return res.status(400).send("hireDate should be in the past");
+        }
+    }
+    if (employeeFromRequest.role && !(validRoles.indexOf(employeeFromRequest.role.toUpperCase()) > -1)) {
+        return res.status(400).send("'role' should be one of - " + validRoles.join(","));
     }
     employee.hireDate = employeeFromRequest.hireDate || employee.hireDate;
     employee.role = employeeFromRequest.role || employee.role;

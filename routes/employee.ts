@@ -1,7 +1,7 @@
 'use strict';
 
 import { Request, Response, Router } from "express";
-import { getRandomId, getFavoriteJoke, getFavouriteQuote } from "../utils/common";
+import { getRandomId, getFavoriteJoke, getFavouriteQuote, isHireDateInPast } from "../utils/common";
 import { IEmployee } from "../typings/employee";
 const router = Router();
 
@@ -45,9 +45,7 @@ router.post('', async function (req, res) {
     return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
   }
 
-  const currentDate = new Date();
-  const givenDate = new Date(employee.hireDate);
-  if (givenDate.getTime() > currentDate.getTime()) {
+  if (isHireDateInPast(employee.hireDate)) {
     return res.status(400).send("hireDate should be in the past");
   }
 
@@ -77,8 +75,13 @@ router.put('/:id', function (req, res) {
   employee.firstName = employeeFromRequest.firstName || employee.firstName;
   employee.lastName = employeeFromRequest.lastName || employee.lastName;
 
-  if (employeeFromRequest.hireDate && !hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
-    return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
+  if (employeeFromRequest.hireDate) {
+    if (!hireDateRegx.test(employeeFromRequest.hireDate.toString())) {
+      return res.status(400).send("hireDate should be in the format of YYYY-MM-DD");
+    }
+    if (isHireDateInPast(employee.hireDate)) {
+      return res.status(400).send("hireDate should be in the past");
+    }
   }
 
   if (employeeFromRequest.role && !(validRoles.indexOf(employeeFromRequest.role.toUpperCase()) > -1)) {

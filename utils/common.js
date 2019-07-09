@@ -85,3 +85,12 @@ function getFavouriteQuote() {
     });
 }
 exports.getFavouriteQuote = getFavouriteQuote;
+function isHireDateInPast(date) {
+    var currentDate = new Date();
+    var givenDate = new Date(date);
+    if (givenDate.getTime() > currentDate.getTime()) {
+        return true;
+    }
+    return false;
+}
+exports.isHireDateInPast = isHireDateInPast;
