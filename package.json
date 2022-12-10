@@ -19,7 +19,7 @@
     "@types/reactstrap": "^8.0.1",
     "@types/uuid": "^3.4.5",
     "bootstrap": "^4.3.1",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "http": "0.0.0",
     "node-fetch": "^2.6.0",
     "react": "^16.8.6",
